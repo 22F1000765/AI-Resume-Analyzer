@@ -5,8 +5,10 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.resume import ResumeResponse
-from app.services.resume_service import create_resume
+from app.schemas.resume import ResumeAnalysisPreview
+from app.services.resume_service import create_resume, update_resume_text
+from app.utils.pdf_parser import extract_text_from_pdf
+from app.models import Resume
 
 router = APIRouter(
     prefix="/resume",
@@ -16,7 +18,7 @@ router = APIRouter(
 
 @router.post(
     "/upload",
-    response_model=ResumeResponse,
+    response_model=ResumeAnalysisPreview,
     status_code=status.HTTP_201_CREATED,
 )
 def upload_resume(
@@ -51,4 +53,40 @@ def upload_resume(
         user_id=1,
     )
 
-    return resume
+    text = extract_text_from_pdf(file_path)
+
+    resume = update_resume_text(
+        db,
+        resume,
+        text,
+)
+
+    return {
+    "filename": resume.filename,
+    "characters": len(resume.extracted_text),
+    "preview": resume.extracted_text[:500],
+    }
+
+@router.get("/{resume_id}")
+def get_resume(
+    resume_id: int,
+    db: Session = Depends(get_db),
+):
+    resume = (
+        db.query(Resume)
+        .filter(Resume.id == resume_id)
+        .first()
+    )
+
+    if not resume:
+        raise HTTPException(
+            status_code=404,
+            detail="Resume not found",
+        )
+
+    return {
+        "id": resume.id,
+        "filename": resume.filename,
+        "text_length": resume.text_length,
+        "preview": resume.extracted_text[:500],
+    }

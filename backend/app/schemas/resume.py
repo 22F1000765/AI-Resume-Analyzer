@@ -9,3 +9,8 @@ class ResumeResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+class ResumeAnalysisPreview(BaseModel):
+    filename: str
+    characters: int
+    preview: str
