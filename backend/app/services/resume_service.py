@@ -35,3 +35,14 @@ def update_resume_text(
     db.refresh(resume)
 
     return resume
+
+
+def get_resume_by_id(
+    db: Session,
+    resume_id: int,
+):
+    return (
+        db.query(Resume)
+        .filter(Resume.id == resume_id)
+        .first()
+    )

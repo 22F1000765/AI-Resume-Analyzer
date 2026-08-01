@@ -6,9 +6,9 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.schemas.resume import ResumeAnalysisPreview
-from app.services.resume_service import create_resume, update_resume_text
-from app.utils.pdf_parser import extract_text_from_pdf
-from app.models import Resume
+from app.services.resume_service import create_resume, update_resume_text,get_resume_by_id
+from app.utils.pdf_parser import extract_text_from_pdf,detect_sections
+from app.models.resume import Resume
 
 router = APIRouter(
     prefix="/resume",
@@ -54,6 +54,20 @@ def upload_resume(
     )
 
     text = extract_text_from_pdf(file_path)
+    
+
+    sections = detect_sections(text)
+
+    print("\n========== DETECTED SECTIONS ==========\n")
+
+    for section, content in sections.items():
+        print(f"{section}")
+        print("-" * 40)
+
+    for line in content:
+        print(line)
+
+    print()
 
     resume = update_resume_text(
         db,
@@ -68,14 +82,13 @@ def upload_resume(
     }
 
 @router.get("/{resume_id}")
+
 def get_resume(
     resume_id: int,
     db: Session = Depends(get_db),
 ):
-    resume = (
-        db.query(Resume)
-        .filter(Resume.id == resume_id)
-        .first()
+    resume = get_resume_by_id(db,
+                              resume_id
     )
 
     if not resume:
