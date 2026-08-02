@@ -13,15 +13,18 @@ def extract_text_from_pdf(file_path: str) -> str:
     
     return extracted_text.strip()
 
+
 def detect_sections(text: str):
     """
     Parse extracted resume text into structured sections.
     Returns a dictionary where each key is a resume section
     and the value is a list of lines belonging to that section.
     """
+    
 
     # Step 1: Split the resume into individual lines
     lines = text.splitlines()
+   
 
     # Step 2: No section detected initially
     current_section = None
@@ -34,6 +37,7 @@ def detect_sections(text: str):
         "Projects": [],
         "Skills": [],
         "Certifications": [],
+        "Achievements": [],
         "Unknown": []
     }
 
@@ -72,6 +76,11 @@ def detect_sections(text: str):
             "certifications",
             "certificates",
             "courses"
+        ],
+        "Achievements": [
+            "achievements",
+            "awards",
+            "accomplishments"
         ]
     }
 

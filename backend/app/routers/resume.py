@@ -58,17 +58,6 @@ def upload_resume(
 
     sections = detect_sections(text)
 
-    print("\n========== DETECTED SECTIONS ==========\n")
-
-    for section, content in sections.items():
-        print(f"{section}")
-        print("-" * 40)
-
-    for line in content:
-        print(line)
-
-    print()
-
     resume = update_resume_text(
         db,
         resume,
