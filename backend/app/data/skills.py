@@ -73,3 +73,65 @@ TECHNICAL_SKILLS = {
         "VS Code",
     ],
 }
+SKILL_ALIASES = {
+    # Programming Languages
+    "python": "Python",
+    "java": "Java",
+    "javascript": "JavaScript",
+    "js": "JavaScript",
+    "typescript": "TypeScript",
+    "ts": "TypeScript",
+    "c++": "C++",
+    "c": "C",
+    "sql": "SQL",
+
+    # Frontend
+    "react": "React",
+    "vue": "Vue.js",
+    "vuejs": "Vue.js",
+    "vue.js": "Vue.js",
+    "tailwind": "Tailwind CSS",
+
+    # Backend
+    "fastapi": "FastAPI",
+    "flask": "Flask",
+    "django": "Django",
+    "node": "Node.js",
+    "nodejs": "Node.js",
+    "node.js": "Node.js",
+    "express": "Express.js",
+    "expressjs": "Express.js",
+
+    # Databases
+    "postgres": "PostgreSQL",
+    "postgresql": "PostgreSQL",
+    "mysql": "MySQL",
+    "sqlite": "SQLite",
+    "mongodb": "MongoDB",
+
+    # Cloud & DevOps
+    "docker": "Docker",
+    "kubernetes": "Kubernetes",
+    "aws": "AWS",
+    "azure": "Azure",
+    "gcp": "GCP",
+
+    # AI / ML
+    "machine learning": "Machine Learning",
+    "deep learning": "Deep Learning",
+    "tensorflow": "TensorFlow",
+    "pytorch": "PyTorch",
+    "sklearn": "Scikit-learn",
+    "scikit learn": "Scikit-learn",
+    "numpy": "NumPy",
+    "pandas": "Pandas",
+
+    # Tools
+    "git": "Git",
+    "github": "GitHub",
+    "git hub": "GitHub",
+    "postman": "Postman",
+    "swagger": "Swagger",
+    "vscode": "VS Code",
+    "vs code": "VS Code",
+}
