@@ -1,3 +1,4 @@
+import re 
 from app.data.skills import SKILL_ALIASES
 
 
@@ -11,7 +12,9 @@ def extract_skills(text: str) -> list[str]:
     extracted = set()
 
     for alias, canonical in SKILL_ALIASES.items():
-        if alias in text:
+        pattern = r"\b" + re.escape(alias) + r"\b"
+
+        if re.search(pattern, text):       
             extracted.add(canonical)
 
     return sorted(extracted)
