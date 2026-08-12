@@ -2,8 +2,10 @@ from app.services.skill_extractor import extract_skills
 from app.services.skill_categorizer import categorize_skills
 from app.services.skill_statistics import generate_skill_statistics
 
+from app.schemas.resume_analysis import ResumeAnalysis
 
-def analyze_resume(text: str) -> dict:
+
+def analyze_resume(text: str) -> ResumeAnalysis:
     """
     Analyze resume text and return extracted skill information.
     """
@@ -14,8 +16,9 @@ def analyze_resume(text: str) -> dict:
 
     statistics = generate_skill_statistics(categorized)
 
-    return {
-        "skills": skills,
-        "categorized_skills": categorized,
-        "statistics": statistics,
-    }
+    return ResumeAnalysis (
+        skills=skills,
+        categorized_skills=categorized,
+        statistics=statistics,
+        )
+        
