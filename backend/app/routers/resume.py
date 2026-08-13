@@ -10,6 +10,9 @@ from app.services.resume_service import create_resume, update_resume_text,get_re
 from app.utils.pdf_parser import extract_text_from_pdf,detect_sections
 from app.models.resume import Resume
 
+from app.schemas.resume_analysis import ResumeAnalysis
+from app.services.resume_analyzer import analyze_resume
+
 router = APIRouter(
     prefix="/resume",
     tags=["Resume"],
@@ -92,3 +95,32 @@ def get_resume(
         "text_length": resume.text_length,
         "preview": resume.extracted_text[:500],
     }
+
+@router.post(
+    "/{resume_id}/analyze",
+    response_model=ResumeAnalysis,
+)
+def analyze_resume_endpoint(
+    resume_id: int,
+    db: Session = Depends(get_db),
+):
+    resume = get_resume_by_id(
+        db,
+        resume_id,
+    )
+
+    if not resume:
+        raise HTTPException(
+            status_code=404,
+            detail="Resume not found",
+        )
+
+    if not resume.extracted_text:
+        raise HTTPException(
+            status_code=400,
+            detail="Resume text is not available for analysis.",
+        )
+
+    analysis = analyze_resume(resume.extracted_text)
+
+    return analysis
