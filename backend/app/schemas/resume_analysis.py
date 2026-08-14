@@ -10,3 +10,4 @@ class ResumeAnalysis(BaseModel):
     skills: list[str]
     categorized_skills: dict[str, list[str]]
     statistics: SkillStatistics
+    score: int

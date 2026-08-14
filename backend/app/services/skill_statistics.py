@@ -1,4 +1,5 @@
-def generate_skill_statistics(categorized_skills: dict[str, list[str]]) -> dict:
+from app.schemas.resume_analysis import SkillStatistics
+def generate_skill_statistics(categorized_skills: dict[str, list[str]]) -> SkillStatistics:
     """
     Generate summary statistics from categorized skills.
     """
@@ -10,8 +11,8 @@ def generate_skill_statistics(categorized_skills: dict[str, list[str]]) -> dict:
     for category, skills in categorized_skills.items():
         category_counts[category] = len(skills)
         total += len(skills)
-
-    return {
-        "total_skills": total,
-        "categories": category_counts,
-    }
+        
+    return SkillStatistics(
+    total_skills=total,
+    categories=category_counts,
+)

@@ -4,6 +4,8 @@ from app.services.skill_statistics import generate_skill_statistics
 
 from app.schemas.resume_analysis import ResumeAnalysis
 
+from app.services.resume_scorer import calculate_resume_score
+
 
 def analyze_resume(text: str) -> ResumeAnalysis:
     """
@@ -16,9 +18,12 @@ def analyze_resume(text: str) -> ResumeAnalysis:
 
     statistics = generate_skill_statistics(categorized)
 
+    score = calculate_resume_score(statistics)
+
     return ResumeAnalysis (
         skills=skills,
         categorized_skills=categorized,
         statistics=statistics,
+        score=score
         )
         
