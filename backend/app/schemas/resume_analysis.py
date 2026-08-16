@@ -5,6 +5,9 @@ class SkillStatistics(BaseModel):
     total_skills: int
     categories: dict[str, int]
 
+class SectionStatistics(BaseModel):
+    present: list[str]
+    missing: list[str]
 
 class ResumeAnalysis(BaseModel):
     skills: list[str]
@@ -12,3 +15,4 @@ class ResumeAnalysis(BaseModel):
     statistics: SkillStatistics
     score: int
     feedback: list[str]
+    sections: SectionStatistics

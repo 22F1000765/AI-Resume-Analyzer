@@ -7,7 +7,8 @@ from app.schemas.resume_analysis import ResumeAnalysis
 from app.services.resume_scorer import calculate_resume_score
 
 from app.services.resume_feedback import generate_resume_feedback
-
+from app.services.section_analyzer import analyze_sections
+from app.utils.pdf_parser import detect_sections
 
 def analyze_resume(text: str) -> ResumeAnalysis:
     """
@@ -19,12 +20,15 @@ def analyze_resume(text: str) -> ResumeAnalysis:
     categorized = categorize_skills(skills)
 
     statistics = generate_skill_statistics(categorized)
+    sections = detect_sections(text)
+    section_statistics = analyze_sections(sections)
 
     score = calculate_resume_score(statistics)
 
     feedback = generate_resume_feedback(
     statistics,
     score,
+    section_statistics.missing,
     )
 
     return ResumeAnalysis (
@@ -32,6 +36,7 @@ def analyze_resume(text: str) -> ResumeAnalysis:
         categorized_skills=categorized,
         statistics=statistics,
         score=score,
-        feedback=feedback
+        feedback=feedback,
+        sections=section_statistics,
         )
         

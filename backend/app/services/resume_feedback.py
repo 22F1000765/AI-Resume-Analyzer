@@ -4,6 +4,7 @@ from app.schemas.resume_analysis import SkillStatistics
 def generate_resume_feedback(
     statistics: SkillStatistics,
     score: int,
+    missing_sections: list[str]
 ) -> list[str]:
     """
     Generate improvement feedback based on resume score and skill coverage.
@@ -20,6 +21,15 @@ def generate_resume_feedback(
         feedback.append(
             "Add skills from more categories to improve skill diversity."
         )
+    if "Experience" in missing_sections:
+        feedback.append(
+            "Consider adding an Experience section to highlight your professional experience."
+    )
+
+    if "Certifications" in missing_sections:
+        feedback.append(
+            "Consider adding a Certifications section if you have relevant certifications."
+    )
 
     if score < 50:
         feedback.append(
