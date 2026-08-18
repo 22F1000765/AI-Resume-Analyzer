@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from app.schemas.section_content import SectionContentAnalysis
 
 
 class SkillStatistics(BaseModel):
@@ -16,3 +17,4 @@ class ResumeAnalysis(BaseModel):
     score: int
     feedback: list[str]
     sections: SectionStatistics
+    section_content: SectionContentAnalysis

@@ -10,6 +10,9 @@ from app.services.resume_feedback import generate_resume_feedback
 from app.services.section_analyzer import analyze_sections
 from app.utils.pdf_parser import detect_sections
 
+from app.services.section_content_analyzer import analyze_section_content
+
+
 def analyze_resume(text: str) -> ResumeAnalysis:
     """
     Analyze resume text and return extracted skill information.
@@ -22,6 +25,7 @@ def analyze_resume(text: str) -> ResumeAnalysis:
     statistics = generate_skill_statistics(categorized)
     sections = detect_sections(text)
     section_statistics = analyze_sections(sections)
+    section_content = analyze_section_content(sections)
 
     score = calculate_resume_score(statistics, section_statistics)
 
@@ -38,5 +42,6 @@ def analyze_resume(text: str) -> ResumeAnalysis:
         score=score,
         feedback=feedback,
         sections=section_statistics,
+        section_content=section_content
         )
         
