@@ -12,6 +12,8 @@ from app.utils.pdf_parser import detect_sections
 
 from app.services.section_content_analyzer import analyze_section_content
 
+from app.services.section_quality_analyzer import analyze_section_quality
+
 
 def analyze_resume(text: str) -> ResumeAnalysis:
     """
@@ -26,6 +28,7 @@ def analyze_resume(text: str) -> ResumeAnalysis:
     sections = detect_sections(text)
     section_statistics = analyze_sections(sections)
     section_content = analyze_section_content(sections)
+    section_quality = analyze_section_quality(section_content)
 
     score = calculate_resume_score(statistics, section_statistics)
 
@@ -35,13 +38,14 @@ def analyze_resume(text: str) -> ResumeAnalysis:
     section_statistics.missing,
     )
 
-    return ResumeAnalysis (
+    return ResumeAnalysis(
         skills=skills,
         categorized_skills=categorized,
         statistics=statistics,
         score=score,
         feedback=feedback,
         sections=section_statistics,
-        section_content=section_content
-        )
+        section_content=section_content,
+        section_quality=section_quality
+    )
         
