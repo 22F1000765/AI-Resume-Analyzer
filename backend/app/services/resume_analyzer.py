@@ -28,7 +28,8 @@ def analyze_resume(text: str) -> ResumeAnalysis:
     sections = detect_sections(text)
     section_statistics = analyze_sections(sections)
     section_content = analyze_section_content(sections)
-    section_quality = analyze_section_quality(section_content)
+    section_quality = analyze_section_quality(section_content,
+                                              section_statistics)
 
     score = calculate_resume_score(statistics, section_statistics)
 

@@ -1,3 +1,4 @@
+from app.schemas.resume_analysis import SectionStatistics
 from app.schemas.section_content import SectionContentAnalysis
 from app.schemas.section_quality import (
     SectionQuality,
@@ -7,12 +8,18 @@ from app.schemas.section_quality import (
 
 def analyze_section_quality(
     section_content: SectionContentAnalysis,
+    section_statistics: SectionStatistics
 ) -> SectionQualityAnalysis:
     """
     Evaluate basic content quality for each resume section.
     """
-
     quality_analysis = {}
+    for section in section_statistics.missing:
+        quality_analysis[section] = SectionQuality(
+        quality="Missing",
+        feedback="This section is missing from the resume.",
+    )
+    
 
     for section, content in section_content.sections.items():
 
